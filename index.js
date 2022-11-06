@@ -47,11 +47,15 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/ordersByEmail', async (req, res) => {
-            const query = req.query;
-            console.log(query);
-            /* const result = await orderCollection.find(query);
-            res.send(result) */
+        app.get('/orders', async (req, res) => {
+            let query = {};
+            if (req.query.email) {
+                query = {
+                    email: req.query.email
+                }
+            }
+            const orders = await orderCollection.find(query).toArray();
+            res.send(orders)
         })
 
 

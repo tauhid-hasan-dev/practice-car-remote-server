@@ -40,12 +40,18 @@ async function run() {
             res.send(service)
         })
 
-        //sending data to the mongodb sever
+        //sending data to the mongodb sever(with the service info)
         app.post('/orders', async (req, res) => {
             const query = req.body;
             const result = await orderCollection.insertOne(query);
             res.send(result)
+        })
 
+        app.get('/ordersByEmail', async (req, res) => {
+            const query = req.query;
+            console.log(query);
+            /* const result = await orderCollection.find(query);
+            res.send(result) */
         })
 
 

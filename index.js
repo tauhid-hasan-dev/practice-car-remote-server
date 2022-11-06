@@ -25,8 +25,9 @@ async function run() {
         const orderCollection = client.db('practiceCar').collection('orders');
 
         app.post('/jwt', (req, res) => {
-            const order = req.body;
-            const token = jwt.sign(order, process.env.DB_TOKEN_SECRET, { expiresIn: '1d' });
+            const user = req.body;
+            //console.log(user)
+            const token = jwt.sign(user, process.env.DB_TOKEN_SECRET, { expiresIn: '1d' });
             res.send({ token })
         })
 
@@ -54,6 +55,7 @@ async function run() {
 
         //getting order by filtering by email
         app.get('/orders', async (req, res) => {
+            console.log(req.headers.authorization)
             let query = {};
             if (req.query.email) {
                 query = {

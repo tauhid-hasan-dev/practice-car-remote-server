@@ -23,6 +23,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology:
 async function run() {
     try {
         const serviceCollection = client.db('practiceCar').collection('services');
+        const orderCollection = client.db('practiceCar').collection('orders');
 
         app.get('/services', async (req, res) => {
             const query = {};
@@ -31,12 +32,22 @@ async function run() {
             res.send(services);
         })
 
+        //getting single service info for checkout and sending order request
         app.get('/services/:id', async (req, res) => {
             const id = req.params.id
             const query = { _id: ObjectId(id) }
             const service = await serviceCollection.findOne(query);
             res.send(service)
         })
+
+        //sending data to the mongodb sever
+        app.post('/orders', async (req, res) => {
+            const query = req.body;
+            const result = await orderCollection.insertOne(query);
+            res.send(result)
+
+        })
+
 
 
     } finally {

@@ -47,6 +47,7 @@ async function run() {
             res.send(result)
         })
 
+        //getting order by filtering by email
         app.get('/orders', async (req, res) => {
             let query = {};
             if (req.query.email) {
@@ -56,6 +57,14 @@ async function run() {
             }
             const orders = await orderCollection.find(query).toArray();
             res.send(orders)
+        })
+
+        //deleting a single order from the order
+        app.delete('/orders/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) }
+            const result = await orderCollection.deleteOne(query);
+            res.send(result)
         })
 
 

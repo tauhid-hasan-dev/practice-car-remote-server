@@ -42,13 +42,10 @@ async function run() {
         const orderCollection = client.db('practiceCar').collection('orders');
 
 
-
-
-
         app.post('/jwt', (req, res) => {
             const user = req.body;
             //console.log(user)
-            const token = jwt.sign(user, process.env.DB_TOKEN_SECRET, { expiresIn: '5' });
+            const token = jwt.sign(user, process.env.DB_TOKEN_SECRET, { expiresIn: '1d' });
             res.send({ token })
         })
 
